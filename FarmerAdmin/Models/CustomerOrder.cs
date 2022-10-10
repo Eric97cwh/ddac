@@ -17,8 +17,8 @@ namespace FarmerAdmin.Models
         public DateTime OrderDate { get; set; }
         [Display(Name = "Quantity")]
         public int Quantity { get; set; }
-        [Display(Name = "User ID")]
-        public string UserID { get; set; }
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
         [Display(Name = "Status")]
         public string Status { get; set; }
     }

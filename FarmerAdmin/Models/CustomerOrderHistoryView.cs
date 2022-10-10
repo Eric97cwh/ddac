@@ -13,9 +13,6 @@ namespace FarmerAdmin.Models
         [Display(Name = "Order ID")]
         public int OrderID { get; set; }
 
-        [Display(Name = "Order Item ID")]
-        public int OrderItemID { get; set; }
-
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 

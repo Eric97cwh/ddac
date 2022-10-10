@@ -19,7 +19,7 @@
         }
 
         tr:nth-child(even) {
-            background-color: #dddddd;
+            background-color: black;
         }
     </style>
 </head>
@@ -33,7 +33,6 @@
             <th>OrderID</th>
             <th>UserName</th>
             <th>Date</th>
-            <th>Address</th>
             <th>Status</th>
             <th>Item</th>
             <th>Update</th>
@@ -45,24 +44,7 @@
                 <td>@orderitem.OrderID</td>
                 <td>@orderitem.UserName</td>
                 <td>@orderitem.OrderDate</td>
-                <td>@orderitem.OrderAddress</td>
-
-                @if (@orderitem.OrderStatus == 0)
-                {
-                    <td>Order Received</td>
-                }
-                @if (@orderitem.OrderStatus == 1)
-                {
-                    <td>Packing</td>
-                }
-                @if (@orderitem.OrderStatus == 2)
-                {
-                    <td>Ready to Deliver</td>
-                }
-                @if (@orderitem.OrderStatus == 3)
-                {
-                    <td>Delivered</td>
-                }
+                <td>@orderitem.Status</td>
 
                 <td>
                     <a asp-action="ViewItem" asp-route-ID="@orderitem.OrderID"><button>View</button></a> &nbsp;

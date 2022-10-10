@@ -10,8 +10,8 @@ namespace FarmerAdmin.Models
     {
 
         [Key]
-        [Display(Name = "User ID")]
-        public string UserId { get; set; }
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
         [Display(Name = "Final Price")]
         public decimal FinalPrice { get; set; }
         

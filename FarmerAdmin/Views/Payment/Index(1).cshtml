@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <br />
+    <h2>Payment</h2>
+    <br />
+    <h3>Search by Order ID: <input type="text" id="search" placeholder="OrderID"></h3>
+    <table id="table" style="background-color:darkseagreen">
+        <tr>
+            <th>PaymentID</th>
+            <th>Payment Method</th>
+            <th>Amount</th>
+            <th>OrderID</th>
+        </tr>
+        @foreach (var paymentitem in Model)
+        {
+            <tr>
+                <td>@paymentitem.PaymentID</td>
+                @if (@paymentitem.PaymentMethod == 0)
+                {
+                    <td>Cash</td>
+                }
+                @if (@paymentitem.PaymentMethod == 1)
+                {
+                    <td>Credit/Debit Card</td>
+                }
+                <td>@paymentitem.Amount</td>
+                <td>@paymentitem.OrderID</td>
+            </tr>
+        }
+    </table>
+    <script>
+        search.addEventListener("keyup", function () {
+            var keyword = this.value;
+            keyword = keyword.toUpperCase();
+            var table = document.getElementById("table");
+            var all_tr = table.getElementsByTagName("tr");
+            for (var i = 0; i < all_tr.length; i++) {
+                var id = all_tr[i].getElementsByTagName("td")[3];
+                if (id) {
+                    var id_value = id.textContent || id.innerText;
+                    id_value = id_value.toUpperCase();
+                    if (id_value.indexOf(keyword) > -1) {
+                        all_tr[i].style.display = ""; // show
+                    } else {
+                        all_tr[i].style.display = "none"; // hide
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

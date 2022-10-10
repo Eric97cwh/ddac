@@ -371,3 +371,4 @@ C:\Users\lenovo\Desktop\FarmerAdmin\FarmerAdmin\bin\Debug\netcoreapp3.1\bundleco
 C:\Users\lenovo\Desktop\FarmerAdmin\FarmerAdmin\obj\Debug\netcoreapp3.1\Razor\Views\Cart\Index.cshtml.g.cs
 C:\Users\lenovo\Desktop\FarmerAdmin\FarmerAdmin\bin\Debug\netcoreapp3.1\AWSSDK.SimpleNotificationService.dll
 C:\Users\lenovo\Desktop\FarmerAdmin\FarmerAdmin\obj\Debug\netcoreapp3.1\Razor\Views\CustomerOrderHistory\Index.cshtml.g.cs
+C:\Users\lenovo\Desktop\FarmerAdmin\FarmerAdmin\obj\Debug\netcoreapp3.1\Razor\Views\Payment\Index(1).cshtml.g.cs

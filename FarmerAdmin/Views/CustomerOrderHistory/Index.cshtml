@@ -9,13 +9,14 @@
 </div>
 @foreach (var history in Model)
     {
-        <div class="container-fluid padding" style="background-color:lightslategray">
+        <div class="container-fluid padding" style="background-color:dimgray">
             <div class="row padding" style="margin-bottom:0.5%">
                 <div class="desc col-lg-8" style="padding-top:20px">
+                    <p><b>Date: </b>@history.OrderDate</p>
                     <p><b>Product Name: </b>@history.ProductName</p>
-                    <p><b>Quantity: </b></p>
-                    <p><b>Price: $ </b></p>
-                    <p><b>Total Price: $ </b></p>
+                    <p><b>Quantity: </b>@history.Quantity</p>
+                    <p><b>Price: $ </b>@history.ProductPrice</p>
+                    <p><b>Total Price: $ </b>@history.TotalPrice</p>
                 </div>
             </div>
         </div>

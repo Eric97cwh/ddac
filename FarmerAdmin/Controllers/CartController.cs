@@ -22,20 +22,20 @@ namespace FarmerAdmin.Controllers
 {
     public class CartController : Controller
     {
-        private const string topicARN = "arn:aws:sns:us-east-1:695539998301:FarmerTopic";
+        private const string topicARN = "arn:aws:sns:us-east-1:383278827480:TP038411Sns";
         private List<string> getKeysInformation()
         {
-            List<string> keys = new List<string>();
+            List<string> values = new List<string>();
             var builder = new ConfigurationBuilder()
                             .SetBasePath(Directory.GetCurrentDirectory())
                             .AddJsonFile("appsettings.json");
             IConfiguration configure = builder.Build(); //build the file
 
-            keys.Add(configure["Keys:Key1"]);
-            keys.Add(configure["Keys:Key2"]);
-            keys.Add(configure["Keys:Key3"]);
+            values.Add(configure["Values:Value1"]);
+            values.Add(configure["Values:Value2"]);
+            values.Add(configure["Values:Value3"]);
 
-            return keys;
+            return values;
         }
 
         private const string bucketName = "farmerwebapplicationtp051172";
@@ -70,13 +70,19 @@ namespace FarmerAdmin.Controllers
         {
             ViewBag.msg = msg;
 
-            var cartproductlist = from m in _context.ProductCartView select m;
-
             var user = User.Identity.Name;
             var findUserId = _context.Users
               .Where(m => m.UserName == user)
               .Select(m => m.Id);
+            var userId = findUserId.FirstOrDefault();
             var result = findUserId.ToListAsync().Result;
+
+            var cartproductlist = from m 
+                                  in _context.ProductCartView 
+                                  where(m.UserId == userId)
+                                  select m;
+
+            
             ViewBag.UserId = String.Join(",", result);
 
             return View(cartproductlist);
@@ -152,19 +158,30 @@ namespace FarmerAdmin.Controllers
             var cartDetail = _context.Cart.Where(u => u.UserId == userId).FirstOrDefault();
 
             var query = _context.Cart.Where(x => x.UserId == userId);
-            //List<Cart> cartList = query.ToList();
-            var insertOrder =
-            new CustomerOrder
+            List<CustomerProduct> cartList = query.ToList();
+
+            cartList.ForEach(m =>
+
+            _context.Add(new CustomerOrder
             {
-                ProductID = 1,
+                ProductID = m.ProductId,
                 OrderDate = DateTime.Now,
-                Quantity = 1,
-                UserID = userId,
+                Quantity = m.Quantity,
+                UserName = user,
                 Status = "Preparing"
-            };
-            _context.Add(insertOrder);
+            }
+            )
+            );
+               var id = _context.SaveChanges();
+            var OrderId = id;
+
+            var cartQuery = _context.Cart.Where(x => x.UserId == userId);
+            List<CustomerProduct> cartInfoList = cartQuery.ToList();
+
+            cartList.ForEach(m =>
+            _context.Remove(m)
+            );
             _context.SaveChanges();
-            var OrderId = insertOrder.OrderID;
 
             var productDetail = _context.Product.Where(u => u.ProductID == cartDetail.ProductId).FirstOrDefault();
 
@@ -180,7 +197,7 @@ namespace FarmerAdmin.Controllers
 
             var PaymentId = insertPayment.PaymentID;
             var GetPaymentPrice = _context.CalculateTotalPriceView
-              .Where(m => m.UserId == userId)
+              .Where(m => m.UserName == user)
               .Select(m => m.FinalPrice);
             var PaymentTotalPrice = GetPaymentPrice.FirstOrDefault();
             var financeData = _context.Finance.Where(c => c.FinanceID == 1).FirstOrDefault();
@@ -191,8 +208,8 @@ namespace FarmerAdmin.Controllers
             _context.SaveChanges();
 
             var broadcastText = $"Payment is successful, we will send item to you in 7 - 14 working days.For your reference: {OrderId}";
-            List<string> keys = getKeysInformation();
-            var snsClient = new AmazonSimpleNotificationServiceClient(keys[0], keys[1], keys[2], RegionEndpoint.USEast1);
+            List<string> values = getKeysInformation();
+            var snsClient = new AmazonSimpleNotificationServiceClient(values[0], values[1], values[2], RegionEndpoint.USEast1);
 
             if (ModelState.IsValid)
             {
