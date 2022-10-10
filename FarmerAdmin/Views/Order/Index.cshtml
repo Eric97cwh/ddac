@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <br />
+    <h2>Order</h2>
+    <br />
+    <h3>Search by Order ID: <input type="text" id="search" placeholder="OrderID"></h3>
+    <table id="table" style="background-color:darkseagreen">
+        <tr>
+            <th>OrderID</th>
+            <th>UserName</th>
+            <th>Date</th>
+            <th>Address</th>
+            <th>Status</th>
+            <th>Item</th>
+            <th>Update</th>
+        </tr>
+        @foreach (var orderitem in Model)
+        {
+            <tr>
+
+                <td>@orderitem.OrderID</td>
+                <td>@orderitem.UserName</td>
+                <td>@orderitem.OrderDate</td>
+                <td>@orderitem.OrderAddress</td>
+
+                @if (@orderitem.OrderStatus == 0)
+                {
+                    <td>Order Received</td>
+                }
+                @if (@orderitem.OrderStatus == 1)
+                {
+                    <td>Packing</td>
+                }
+                @if (@orderitem.OrderStatus == 2)
+                {
+                    <td>Ready to Deliver</td>
+                }
+                @if (@orderitem.OrderStatus == 3)
+                {
+                    <td>Delivered</td>
+                }
+
+                <td>
+                    <a asp-action="ViewItem" asp-route-ID="@orderitem.OrderID"><button>View</button></a> &nbsp;
+                </td>
+                <td>
+                    <a asp-action="UpdateStatus" asp-route-ID="@orderitem.OrderID"><button>Update</button></a> &nbsp;
+                </td>
+            </tr>
+        }
+    </table>
+    <script>
+        search.addEventListener("keyup", function () {
+            var keyword = this.value;
+            keyword = keyword.toUpperCase();
+            var table = document.getElementById("table");
+            var all_tr = table.getElementsByTagName("tr");
+            for (var i = 0; i < all_tr.length; i++) {
+                var id = all_tr[i].getElementsByTagName("td")[0];
+                if (id) {
+                    var id_value = id.textContent || id.innerText;
+                    id_value = id_value.toUpperCase();
+                    if (id_value.indexOf(keyword) > -1) {
+                        all_tr[i].style.display = ""; // show
+                    } else {
+                        all_tr[i].style.display = "none"; // hide
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
+
+

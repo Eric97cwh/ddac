@@ -1,0 +1,32 @@
+﻿@model FarmerAdmin.Models.CustomerOrder
+@{
+    ViewData["Title"] = "UpdateStatus";
+}
+    <h1>Order Details</h1>
+    <hr />
+    <form asp-action="UpdateStatus" method="post">
+        <!--Order ID-->
+        <label asp-for="OrderID" class="control-label"></label>
+        <input asp-for="OrderID" class="form-control" readonly="readonly" />
+        <!--UserName-->
+        <label asp-for="UserID" class="control-label"></label>
+        <input asp-for="UserID" class="form-control" readonly="readonly" />
+        <!--Order Date-->
+        <label asp-for="OrderDate" class="control-label"></label>
+        <input asp-for="OrderDate" class="form-control" readonly="readonly" />
+        <!--Order Status-->
+        <label asp-for="Status" class="control-label"></label>
+        <select asp-for="Status" class="form-control">
+            <option value="Packing">Packing</option>
+            <option value="Delivered">Delivered</option>
+        </select>
+        <br />
+        <br />
+        <input type="submit" name="submit" value="Order Update" /><br />
+    </form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

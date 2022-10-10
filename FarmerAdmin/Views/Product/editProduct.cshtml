@@ -1,0 +1,36 @@
+﻿@model FarmerAdmin.Models.Product
+@{
+    ViewData["Title"] = "editProduct";
+}
+
+    <h1>Update Product</h1>
+    <hr />
+    <form asp-action="editProduct" method="post" enctype="multipart/form-data">
+
+        <label asp-for="ProductID" class="control-label"></label>
+
+        <input asp-for="ProductID" class="form-control" readonly />
+        <span asp-validation-for="ProductID" class="text-danger"></span>
+
+        <label asp-for="ProductName" class="control-label"></label>
+
+        <input asp-for="ProductName" class="form-control" />
+        <span asp-validation-for="ProductName" class="text-danger"></span>
+        <label asp-for="ProductPrice" class="control-label"></label>
+
+        <input asp-for="ProductPrice" class="form-control" />
+        <span asp-validation-for="ProductPrice" class="text-danger"></span>
+
+        <label asp-for="ProductPicture" class="control-label"></label>
+
+        <input type="file" name="imageFile" accept="image/*" multiple required class="form-control" />
+        <span asp-validation-for="ProductPicture" class="text-danger"></span>
+        <input type="hidden" asp-for="ProductPictureName" name="productfilename" class="form-control" />
+        <br />
+        <input type="submit" name="submit" value="Edit Product" /><br /><br />
+
+    </form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

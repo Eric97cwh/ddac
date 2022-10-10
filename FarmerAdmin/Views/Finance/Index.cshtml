@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Finance</h1>
+<br />
+@foreach (var item in Model)
+{
+    <label style="font-size:32px">Total Earned:</label>
+    <label style="font-size:32px">@item.Income</label>
+}
+

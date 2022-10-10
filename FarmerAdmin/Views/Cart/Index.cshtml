@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+@if (ViewBag.msg != "")
+{
+    <script>alert("@ViewBag.msg");</script>
+}
+                    
+<div  style="display: inline-block;margin-right:20px; padding-bottom:1%">
+    <h1>Cart Details</h1>
+    <form asp-action="postPaymentOrder" method="post">
+    <input style="width: auto; height:auto" class="btn-outline-primary" type="submit" name="submit" value="Confirm Payment" onclick="myFunction()" />
+    <select name="PaymentMethod" >
+      <option value="0">Cash</option>
+      <option value="1">Debit/Credit Card</option>
+    </select>
+    </form>
+</div>
+@foreach (var cartproductitem in Model)
+    {
+        <div class="container-fluid padding" style="background-color:slategrey">
+            <div class="row padding" style="margin-bottom:0.5%">
+                <div class="desc col-lg-8" style="padding-top:20px">
+                    <form asp-action="editCart" asp-route-ID=@cartproductitem.CartId method="post">
+                    <input type="hidden" value="@cartproductitem.CartId" name="CartId"/>
+                    <input type="hidden" value="@ViewBag.UserId" name="UserId"/>
+                    <input type="hidden" value="@cartproductitem.ProductId" name="ProductId"/>
+                    <input type="hidden" value="@cartproductitem.TotalPrice" name="TotalPrice"/>
+                    <p hidden id="cid">@cartproductitem.CartId</p>
+                    <p><b>Product Name: </b>@cartproductitem.ProductName</p>
+                    <p><b>Quantity: </b>
+                        <input id="qty" type="number" min="0" style="width:10%;" name="Quantity" placeholder="Qty" value="@cartproductitem.Qty" onblur="UpdateRecord()"/>
+                        <input style="width: auto; height:auto" class="btn-outline-primary" type="submit" name="submit" value="Update"/>
+                    </p>
+                    <p><b>Price: $ </b>@cartproductitem.TotalPrice</p>
+                    <p><b>Total Price: $ </b>@cartproductitem.FinalPrice</p>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+    }
+
+
+    <script>
+
+    function myFunction() {
+  confirm("Do You Confirm To Pay?");
+}
+
+    </script>
